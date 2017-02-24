@@ -18,7 +18,7 @@ import java.util.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-public class UserController {
+public class UserController extends ExceptionHandlerController {
     @Autowired
     private UserService userService;
 
@@ -167,6 +167,7 @@ public class UserController {
      * @return 返回正常结果json数据
      * @throws Exception
      */
+    @Authorization
     @ResponseBody
     @RequestMapping(value = "/users/password/{userId}", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
     public String updatePassword(@PathVariable int userId,

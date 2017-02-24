@@ -23,10 +23,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findByEmail(String email);
 
-    @Modifying
-    @Transactional
-    @Query("update User us set us.token=:qToken where us.id=:qId")
-    void updateToken(@Param("qId") int id, @Param("qToken") String token);
+//    @Modifying
+//    @Transactional
+//    @Query("update User us set us.token=:qToken where us.id=:qId")
+//    void updateToken(@Param("qId") int id, @Param("qToken") String token);
 
     @Modifying
     @Transactional

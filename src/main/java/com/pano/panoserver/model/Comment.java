@@ -14,16 +14,16 @@ public class Comment {
     @GeneratedValue
     private int id;
 
-    @NotNull
+    @Column(nullable = false)
     private String content;
 
-    @NotNull
+    @Column(nullable = false)
     private Timestamp createTime;
 
-    @NotNull
+    @Column(nullable = false)
     private int recordId;
 
-    @NotNull
+    @Column(nullable = false)
     private int userId;
 
     public int getId() {

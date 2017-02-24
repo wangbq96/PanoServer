@@ -15,26 +15,26 @@ public class User {
     @GeneratedValue
     private int id;
 
-    @NotNull
+    @Column(nullable = false, unique = true)
     private String nickname;
 
     private byte[] headPic;
 
     private String introduction;
 
-    @NotNull
+    @Column(nullable = false)
     private Timestamp createTime;
 
-    @NotNull
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @NotNull
+    @Column(nullable = false, unique = true)
     private String phone;
 
-    @NotNull
+    @Column(nullable = false)
     private String password;
 
-    @NotNull
+    @Column(nullable = false)
     private String dir;
 
     public int getId() {

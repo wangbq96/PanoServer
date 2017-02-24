@@ -2,10 +2,7 @@ package com.pano.panoserver.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pano.panoserver.annotation.Authorization;
-import com.pano.panoserver.exception.ExistException;
-import com.pano.panoserver.exception.LoginTypeException;
-import com.pano.panoserver.exception.NotFoundException;
-import com.pano.panoserver.exception.UnauthorizedException;
+import com.pano.panoserver.exception.*;
 import com.pano.panoserver.model.PasswordReset;
 import com.pano.panoserver.model.Token;
 import com.pano.panoserver.model.User;
@@ -64,6 +61,7 @@ public class UserServiceImpl implements UserService {
         user.setDir(md5(email));
 
         user.setCreateTime(new Timestamp(System.currentTimeMillis()));
+
         try {
             userRepository.saveAndFlush(user);
         } catch (Exception e) {
@@ -75,7 +73,7 @@ public class UserServiceImpl implements UserService {
 
     // ok
     public Token login(String username, String password, String type) throws Exception {
-
+        password = md5(password);
         if (type.equals("email")) {
             user = userRepository.findByEmailAndPassword(username, password);
         } else if (type.equals("phone")) {
@@ -88,7 +86,7 @@ public class UserServiceImpl implements UserService {
             String token = tokenRepository.createToken(userId);
             return new Token(userId, token);
         } else {
-            return null;
+            throw new WrongPasswordException();
         }
     }
 

@@ -1,7 +1,6 @@
 package com.pano.panoserver.service.impl;
 
-import com.pano.panoserver.exception.FollowExistException;
-import com.pano.panoserver.exception.FollowNotFoundException;
+import com.pano.panoserver.exception.ExistException;
 import com.pano.panoserver.exception.NotFoundException;
 import com.pano.panoserver.model.Follow;
 import com.pano.panoserver.repository.FollowRepository;
@@ -29,7 +28,7 @@ public class FollowServiceImpl implements FollowService {
 
     public void follow(int userId, int followerUserId) throws Exception {
         if (followRepository.findByFollowUserIdAndFollowerUserId(userId, followerUserId) != null) {
-            throw new FollowExistException();
+            throw new ExistException();
         }
         follow = new Follow();
         follow.setFollowUserId(userId);

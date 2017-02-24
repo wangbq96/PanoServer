@@ -12,7 +12,7 @@ spring:
     show-sql: true
     generate-ddl: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
       naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
       dialect: org.hibernate.dialect.MySQL5Dialect
 
@@ -20,3 +20,13 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
+
+  mail:
+    host:
+    username:
+    password:
+    default-encoding: UTF-8
+
+picture:
+  path: /home/www/pano
+

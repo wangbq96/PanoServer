@@ -14,13 +14,13 @@ public class Follow {
     @GeneratedValue
     private int id;
 
-    @NotNull
+    @Column(nullable = false)
     private Timestamp createTime;
 
-    @NotNull
+    @Column(nullable = false)
     private int followUserId;
 
-    @NotNull
+    @Column(nullable = false)
     private int followerUserId;
 
     public int getId() {

@@ -19,9 +19,9 @@ public class PasswordReset {
     private String email;
 
     @NotNull
-    private String key;
+    private String keyword;
 
-    private long outDate;
+//    private long outDate;
 
     public int getId() {
         return id;
@@ -40,18 +40,18 @@ public class PasswordReset {
     }
 
     public String getKey() {
-        return key;
+        return keyword;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setKey(String keyword) {
+        this.keyword = keyword;
     }
 
-    public long getOutDate() {
-        return outDate;
-    }
-
-    public void setOutDate(long outDate) {
-        this.outDate = outDate;
-    }
+//    public long getOutDate() {
+//        return outDate;
+//    }
+//
+//    public void setOutDate(long outDate) {
+//        this.outDate = outDate;
+//    }
 }

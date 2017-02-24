@@ -48,7 +48,7 @@ public class FollowController {
      */
     @Authorization
     @ResponseBody
-    @RequestMapping(value = "/follow", method = RequestMethod.DELETE, produces="application/json;charset=UTF-8")
+    @RequestMapping(value = "/unfollow", method = RequestMethod.DELETE, produces="application/json;charset=UTF-8")
     public String unfollow(@RequestParam int userId,
                            @RequestParam int unfollowUserId) throws Exception {
 
