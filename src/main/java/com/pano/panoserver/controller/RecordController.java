@@ -18,11 +18,10 @@ import java.io.IOException;
 @RestController
 public class RecordController extends ExceptionHandlerController {
     @Autowired
-    RecordService recordService;
+    private RecordService recordService;
 
     /**
      * 发布
-     * @param request
      * @param userId
      * @param content
      * @param lon
@@ -34,8 +33,7 @@ public class RecordController extends ExceptionHandlerController {
     @Authorization
     @ResponseBody
     @RequestMapping(value = "/records", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
-    public String publish(HttpServletRequest request,
-                          @RequestParam int userId,
+    public String publish(@RequestParam int userId,
                           @RequestParam String content,
                           @RequestParam(required = false) String lon,
                           @RequestParam(required = false) String lan,

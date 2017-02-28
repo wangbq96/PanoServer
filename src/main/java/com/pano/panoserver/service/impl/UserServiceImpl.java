@@ -33,18 +33,13 @@ import java.util.*;
  */
 @Service
 public class UserServiceImpl implements UserService {
-
     @Value("{spring.mail.username}")
     private String serverEmail;
 
-    private User user;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private FollowRepository followRepository;
-
     @Autowired
     private TokenRepository tokenRepository;
     @Autowired
@@ -73,6 +68,7 @@ public class UserServiceImpl implements UserService {
 
     // ok
     public Token login(String username, String password, String type) throws Exception {
+        User user;
         password = md5(password);
         if (type.equals("email")) {
             user = userRepository.findByEmailAndPassword(username, password);
@@ -167,6 +163,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(email);
         user.setPassword(md5(password));
         userRepository.updatePassword(user.getId(), user.getPassword());
+        passwordResetRespository.delete(passwordReset);
     }
 
     @Override

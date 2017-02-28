@@ -121,7 +121,7 @@ public class UserController extends ExceptionHandlerController {
      */
     @Authorization
     @ResponseBody
-    @RequestMapping(value = "/users/follow/{type}/{userId}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/users/{type}/{userId}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     public String getFollowUsers(@PathVariable(value = "userId") int userId,
                                 @PathVariable(value = "type") String type) throws Exception {
 

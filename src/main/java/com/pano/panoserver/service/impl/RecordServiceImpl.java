@@ -29,13 +29,11 @@ import java.util.*;
 public class RecordServiceImpl implements RecordService {
 
     @Autowired
-    PictureRepository pictureRepository;
+    private PictureRepository pictureRepository;
     @Autowired
-    RecordRepository recordRepository;
+    private RecordRepository recordRepository;
     @Autowired
-    UserRepository userRepository;
-    @Autowired
-    FollowRepository followRepository;
+    private UserRepository userRepository;
 
     public void publish(Record record, MultipartFile file) throws Exception {
         User user = userRepository.findOne(record.getUserId());

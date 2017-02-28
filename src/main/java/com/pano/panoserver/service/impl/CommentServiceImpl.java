@@ -23,7 +23,6 @@ import java.util.Map;
  */
 @Service
 public class CommentServiceImpl implements CommentService {
-    private Comment comment;
 
     @Autowired
     private CommentRepository commentRepository;
@@ -36,7 +35,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void deleteComment(int userId, int commentId) throws Exception {
-        comment = commentRepository.findOne(commentId);
+        Comment comment = commentRepository.findOne(commentId);
         if (comment == null) {
             throw new NotFoundException();
         }

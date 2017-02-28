@@ -18,19 +18,15 @@ import java.sql.Timestamp;
  */
 @Service
 public class FollowServiceImpl implements FollowService {
-    private Follow follow;
 
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    FollowRepository followRepository;
+    private FollowRepository followRepository;
 
     public void follow(int userId, int followerUserId) throws Exception {
         if (followRepository.findByFollowUserIdAndFollowerUserId(userId, followerUserId) != null) {
             throw new ExistException();
         }
-        follow = new Follow();
+        Follow follow = new Follow();
         follow.setFollowUserId(userId);
         follow.setFollowerUserId(followerUserId);
         follow.setCreateTime(new Timestamp(System.currentTimeMillis()));
@@ -38,7 +34,7 @@ public class FollowServiceImpl implements FollowService {
     }
 
     public void unfollow(int userId, int unfollowUserId) throws Exception {
-        follow = followRepository.findByFollowUserIdAndFollowerUserId(userId, unfollowUserId);
+        Follow follow = followRepository.findByFollowUserIdAndFollowerUserId(userId, unfollowUserId);
         if (follow != null) {
             followRepository.delete(follow);
         } else {
