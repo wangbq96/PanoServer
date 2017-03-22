@@ -26,12 +26,27 @@ public class CommentController {
     private CommentService commentService;
 
     /**
-     * 评论
-     * @param content
-     * @param recordId
-     * @param userId
-     * @return 返回正常结果json数据
-     * @throws IOException
+     * @api {POST} /comments
+     * @apiGroup Comment
+     * @apiDescription 发布评论
+     * @apiParam {int} userId 用户ID
+     * @apiParam {int} recordId 记录ID
+     * @apiParam {String} content 评论内容
+     * @apiSuccess (200) {String}
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": true,
+     *         "message": null,
+     *         "data": null
+     *     }
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": false,
+     *         "message": "Exception Name",
+     *         "data": null
+     *     }
      */
     @Authorization
     @ResponseBody
@@ -51,27 +66,56 @@ public class CommentController {
     }
 
     /**
-     * 删除评论
-     * @param userId
-     * @param commentId
-     * @return 返回正常结果json数据
-     * @throws Exception
+     * @api {DELETE} /comments/:commentId
+     * @apiGroup Comment
+     * @apiDescription 删除评论
+     * @apiParam {int} userId 用户ID
+     * @apiParam {int} commentId 记录ID
+     * @apiSuccess (200) {String}
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": true,
+     *         "message": null,
+     *         "data": null
+     *     }
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": false,
+     *         "message": "Exception Name",
+     *         "data": null
+     *     }
      */
     @Authorization
     @ResponseBody
     @RequestMapping(value = "/comments/{commentId}", method = RequestMethod.DELETE, produces="application/json;charset=UTF-8")
     public String deleteComment(@RequestParam int userId,
                                 @PathVariable int commentId) throws Exception {
-
         commentService.deleteComment(userId, commentId);
         return new RightMessage(null).toString();
     }
 
     /**
-     * 获取某个pano的评论
-     * @param recordId
-     * @return 返回正常结果json数据
-     * @throws IOException
+     * @api {GET} /comments/record/:recordId
+     * @apiGroup Comment
+     * @apiDescription 获取某个记录的评论
+     * @apiParam {int} recordId 记录ID
+     * @apiSuccess (200) {String}
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": true,
+     *         "message": null,
+     *         "data": null
+     *     }
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": false,
+     *         "message": "Exception Name",
+     *         "data": []
+     *     }
      */
     @Authorization
     @ResponseBody

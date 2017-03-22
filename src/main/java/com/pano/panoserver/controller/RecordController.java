@@ -21,14 +21,29 @@ public class RecordController extends ExceptionHandlerController {
     private RecordService recordService;
 
     /**
-     * 发布
-     * @param userId
-     * @param content
-     * @param lon
-     * @param lan
-     * @param file
-     * @return 返回正常结果json数据
-     * @throws Exception
+     * @api {POST} /records
+     * @apiGroup Record
+     * @apiDescription 发布pano
+     * @apiParam {int} userId 用户ID
+     * @apiParam {String} content 内容
+     * @apiParam {String} lon 经度 nullable
+     * @apiParam {String} lan 纬度 nullable
+     * @apiParam {MultipartFile} file 图片文件
+     * @apiSuccess (200) {String}
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": true,
+     *         "message": null,
+     *         "data": null
+     *     }
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": false,
+     *         "message": "Exception Name",
+     *         "data": null
+     *     }
      */
     @Authorization
     @ResponseBody
@@ -47,10 +62,25 @@ public class RecordController extends ExceptionHandlerController {
     }
 
     /**
-     * 获取某人的全部pano
-     * @param userId
-     * @return 返回正常结果json数据
-     * @throws IOException
+     * @api {GET} /records/user/:userId
+     * @apiGroup Record
+     * @apiDescription 获取某个用户所有的记录
+     * @apiParam {int} userId 用户ID
+     * @apiSuccess (200) {String}
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": true,
+     *         "message": null,
+     *         "data": []
+     *     }
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": false,
+     *         "message": "Exception Name",
+     *         "data": null
+     *     }
      */
     @Authorization
     @ResponseBody
@@ -60,11 +90,25 @@ public class RecordController extends ExceptionHandlerController {
     }
 
     /**
-     * 获取timeline
-     * @param userId
-     * @param earlyRecordId
-     * @return 返回正常结果json数据
-     * @throws IOException
+     * @api {GET} /timeline/:userId
+     * @apiGroup Record
+     * @apiDescription 获取timeline
+     * @apiParam {int} userId 用户ID
+     * @apiSuccess (200) {String}
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": true,
+     *         "message": null,
+     *         "data": []
+     *     }
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": false,
+     *         "message": "Exception Name",
+     *         "data": null
+     *     }
      */
     @Authorization
     @ResponseBody

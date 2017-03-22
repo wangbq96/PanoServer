@@ -23,13 +23,28 @@ public class UserController extends ExceptionHandlerController {
     private UserService userService;
 
     /**
-     * 注册
-     * @param nickname
-     * @param password
-     * @param email
-     * @param phone
-     * @return 返回正常结果json数据
-     * @throws Exception
+     * @api {POST} /users
+     * @apiGroup User
+     * @apiDescription 注册
+     * @apiParam {String} nickname 昵称
+     * @apiParam {String} password 密码
+     * @apiParam {String} email 邮箱
+     * @apiParam {String} phone 手机号
+     * @apiSuccess (200) {String}
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": true,
+     *         "message": null,
+     *         "data": null
+     *     }
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": false,
+     *         "message": "Exception Name",
+     *         "data": null
+     *     }
      */
     @ResponseBody
     @RequestMapping(value = "/users", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
@@ -50,29 +65,95 @@ public class UserController extends ExceptionHandlerController {
     }
 
     /**
-     * 登录
-     * @param username
-     * @param password
-     * @param type
-     * @return 返回正常结果json数据
-     * @throws Exception
+     * @api {POST} /sessions/email
+     * @apiGroup User
+     * @apiDescription 使用email登录
+     * @apiParam {String} username 用户名
+     * @apiParam {String} password 密码
+     * @apiSuccess (200) {String}
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": true,
+     *         "message": null,
+     *         "data": {
+     *             "id": "user_id",
+     *             "token": "token_str"
+     *         }
+     *     }
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": false,
+     *         "message": "Exception Name",
+     *         "data": null
+     *     }
      */
     @ResponseBody
-    @RequestMapping(value = "/sessions/{type}", method = RequestMethod.POST)
-    public String login(@RequestParam String username,
-                        @RequestParam String password,
-                        @PathVariable(value = "type") String type) throws Exception {
+    @RequestMapping(value = "/sessions/email", method = RequestMethod.POST)
+    public String loginByEmail(@RequestParam String username,
+                               @RequestParam String password) throws Exception {
 
-        Token token = userService.login(username, password, type);
+        Token token = userService.login(username, password, "email");
         return new RightMessage(token).toString();
 
     }
 
     /**
-     * 登出
-     * @param userId
-     * @return 返回正常结果json数据
-     * @throws Exception
+     * @api {POST} /sessions/phone
+     * @apiGroup User
+     * @apiDescription 使用phone登录
+     * @apiParam {String} username 用户名
+     * @apiParam {String} password 密码
+     * @apiSuccess (200) {String}
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": true,
+     *         "message": null,
+     *         "data": {
+     *             "id": "user_id",
+     *             "token": "token_str"
+     *         }
+     *     }
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": false,
+     *         "message": "Exception Name",
+     *         "data": null
+     *     }
+     */
+    @ResponseBody
+    @RequestMapping(value = "/sessions/phone", method = RequestMethod.POST)
+    public String loginByPhone(@RequestParam String username,
+                               @RequestParam String password) throws Exception {
+
+        Token token = userService.login(username, password, "email");
+        return new RightMessage(token).toString();
+
+    }
+
+    /**
+     * @api {DELETE} /sessions/:userId
+     * @apiGroup User
+     * @apiDescription 登出
+     * @apiParam {int} userId 用户ID
+     * @apiSuccess (200) {String}
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": true,
+     *         "message": null,
+     *         "data": null
+     *     }
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": false,
+     *         "message": "Exception Name",
+     *         "data": null
+     *     }
      */
     @Authorization
     @ResponseBody
@@ -83,25 +164,58 @@ public class UserController extends ExceptionHandlerController {
     }
 
     /**
-     * 搜索用户
-     * @param keyword
-     * @return 返回正常结果json数据
-     * @throws Exception
+     * @api {POST} /users/search/:keyword
+     * @apiGroup User
+     * @apiDescription 搜索用户
+     * @apiParam {String} keyword 关键字
+     * @apiSuccess (200) {String}
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": true,
+     *         "message": null,
+     *         "data": {
+     *             []
+     *         }
+     *     }
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": false,
+     *         "message": "Exception Name",
+     *         "data": null
+     *     }
      */
     @Authorization
     @ResponseBody
     @RequestMapping(value = "/users/search/{keyword}", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
     public String searchUser(@PathVariable(value = "keyword") String keyword) throws Exception {
-
         List<User> list = userService.searchUser(keyword);
         return new RightMessage(list).toString();
     }
 
     /**
-     * 获取某个用户
-     * @param userId
-     * @return 返回正常结果json数据
-     * @throws Exception
+     * @api {GET} /users/:userId
+     * @apiGroup User
+     * @apiDescription 获取某个用户的详细信息
+     * @apiParam {int} userId 其他用户ID
+     * @apiSuccess (200) {String}
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": true,
+     *         "message": null,
+     *         "data": {
+     *             user info
+     *         }
+     *     }
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": false,
+     *         "message": "Exception Name",
+     *         "data": null
+     *     }
      */
     @Authorization
     @ResponseBody
@@ -113,27 +227,89 @@ public class UserController extends ExceptionHandlerController {
     }
 
     /**
-     * 获取粉丝或关注列表
-     * @param userId
-     * @param type
-     * @return 返回正常结果json数据
-     * @throws Exception
+     * @api {GET} /users/follow/:userId
+     * @apiGroup User
+     * @apiDescription 获取关注列表
+     * @apiParam {int} userId 本用户ID
+     * @apiSuccess (200) {String}
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": true,
+     *         "message": null,
+     *         "data": {
+     *             []
+     *         }
+     *     }
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": false,
+     *         "message": "Exception Name",
+     *         "data": null
+     *     }
      */
     @Authorization
     @ResponseBody
-    @RequestMapping(value = "/users/{type}/{userId}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    public String getFollowUsers(@PathVariable(value = "userId") int userId,
-                                @PathVariable(value = "type") String type) throws Exception {
+    @RequestMapping(value = "/users/follow/{userId}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    public String getFollowUsers(@PathVariable(value = "userId") int userId) throws Exception {
 
-        List<User> list = userService.getFollowUsers(userId, type);
+        List<User> list = userService.getFollowUsers(userId, "follow");
         return new RightMessage(list).toString();
     }
 
     /**
-     * 忘记密码
-     * @param email
-     * @return 返回正常结果json数据
-     * @throws Exception
+     * @api {GET} /users/fans/:userId
+     * @apiGroup User
+     * @apiDescription 获取粉丝列表
+     * @apiParam {int} userId 本用户ID
+     * @apiSuccess (200) {String}
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": true,
+     *         "message": null,
+     *         "data": {
+     *             []
+     *         }
+     *     }
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": false,
+     *         "message": "Exception Name",
+     *         "data": null
+     *     }
+     */
+    @Authorization
+    @ResponseBody
+    @RequestMapping(value = "/users/fans/{userId}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    public String getFanUsers(@PathVariable(value = "userId") int userId) throws Exception {
+
+        List<User> list = userService.getFollowUsers(userId, "fans");
+        return new RightMessage(list).toString();
+    }
+
+    /**
+     * @api {POST} /users/forget_password
+     * @apiGroup User
+     * @apiDescription 发送忘记密码的邮件
+     * @apiParam {String} email 用户email
+     * @apiSuccess (200) {String}
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": true,
+     *         "message": null,
+     *         "data": null
+     *     }
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": false,
+     *         "message": "Exception Name",
+     *         "data": null
+     *     }
      */
     @ResponseBody
     @RequestMapping(value = "/users/forget_password/", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -143,29 +319,59 @@ public class UserController extends ExceptionHandlerController {
     }
 
     /**
-     * 忘记密码后检验密钥
-     * @param email
-     * @param key
-     * @param password
-     * @return 返回正常结果json数据
-     * @throws Exception
+     * @api {POST} /users/reset_password
+     * @apiGroup User
+     * @apiDescription 重置密码
+     * @apiParam {String} email 用户email
+     * @apiParam {String} key 邮件中的关键字
+     * @apiParam {String} password 新密码
+     * @apiSuccess (200) {String}
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": true,
+     *         "message": null,
+     *         "data": null
+     *     }
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": false,
+     *         "message": "Exception Name",
+     *         "data": null
+     *     }
      */
     @ResponseBody
     @RequestMapping(value = "/users/reset_password/", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String resetPassword(@RequestParam String email,
-                           @RequestParam String key,
-                           @RequestParam String password) throws Exception {
+                                @RequestParam String key,
+                                @RequestParam String password) throws Exception {
         userService.resetPassword(email, key, password);
         return new RightMessage(null).toString();
     }
 
     /**
-     * 修改密码
-     * @param userId
-     * @param oldPassword
-     * @param newPassword
-     * @return 返回正常结果json数据
-     * @throws Exception
+     * @api {PUT} /users/password/:userId
+     * @apiGroup User
+     * @apiDescription 修改密码
+     * @apiParam {int} userId 用户ID
+     * @apiParam {String} oldPassword 旧密码
+     * @apiParam {String} newPassword 新密码
+     * @apiSuccess (200) {String}
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": true,
+     *         "message": null,
+     *         "data": null
+     *     }
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": false,
+     *         "message": "Exception Name",
+     *         "data": null
+     *     }
      */
     @Authorization
     @ResponseBody
@@ -178,13 +384,28 @@ public class UserController extends ExceptionHandlerController {
     }
 
     /**
-     * 修改个人信息
-     * @param userId
-     * @param nickname
-     * @param introduction
-     * @param headPic
-     * @return 返回正常结果json数据
-     * @throws Exception
+     * @api {PUT} /users/password/:userId
+     * @apiGroup User
+     * @apiDescription 修改个人信息
+     * @apiParam {int} userId 用户ID
+     * @apiParam {String} nickname 昵称
+     * @apiParam {String} introduction 简介
+     * @apiParam {MultipartFile} headPic 头像
+     * @apiSuccess (200) {String}
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": true,
+     *         "message": null,
+     *         "data": null
+     *     }
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": false,
+     *         "message": "Exception Name",
+     *         "data": null
+     *     }
      */
     @Authorization
     @ResponseBody

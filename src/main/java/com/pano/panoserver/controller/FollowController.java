@@ -22,11 +22,26 @@ public class FollowController {
     private FollowService followService;
 
     /**
-     * 关注
-     * @param userId
-     * @param followerUserId
-     * @return 返回正常结果json数据
-     * @throws Exception
+     * @api {POST} /follow
+     * @apiGroup Follow
+     * @apiDescription 关注
+     * @apiParam {int} userId 用户ID
+     * @apiParam {int} followerUserId 被关注用户ID
+     * @apiSuccess (200) {String}
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": true,
+     *         "message": null,
+     *         "data": null
+     *     }
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": false,
+     *         "message": "Exception Name",
+     *         "data": null
+     *     }
      */
     @Authorization
     @ResponseBody
@@ -40,19 +55,34 @@ public class FollowController {
     }
 
     /**
-     * 取消关注
-     * @param userId
-     * @param unfollowUserId
-     * @return
-     * @throws Exception
+     * @api {DELETE} /follow
+     * @apiGroup Follow
+     * @apiDescription 取消关注
+     * @apiParam {int} userId 用户ID
+     * @apiParam {int} followerUserId 被关注用户ID
+     * @apiSuccess (200) {String}
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": true,
+     *         "message": null,
+     *         "data": null
+     *     }
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "result": false,
+     *         "message": "Exception Name",
+     *         "data": null
+     *     }
      */
     @Authorization
     @ResponseBody
-    @RequestMapping(value = "/unfollow", method = RequestMethod.DELETE, produces="application/json;charset=UTF-8")
+    @RequestMapping(value = "/follow", method = RequestMethod.DELETE, produces="application/json;charset=UTF-8")
     public String unfollow(@RequestParam int userId,
-                           @RequestParam int unfollowUserId) throws Exception {
+                           @RequestParam int followerUserId) throws Exception {
 
-        followService.unfollow(userId, unfollowUserId);
+        followService.unfollow(userId, followerUserId);
         return new RightMessage(null).toString();
     }
 }
