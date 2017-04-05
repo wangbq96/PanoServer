@@ -27,7 +27,7 @@ public class FollowController {
      * @apiDescription 关注
      * @apiParam {int} userId 用户ID
      * @apiParam {int} followerUserId 被关注用户ID
-     * @apiSuccess (200) {String}
+     * @apiSuccess (200) {String} message
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 OK
      *     {
@@ -55,12 +55,12 @@ public class FollowController {
     }
 
     /**
-     * @api {DELETE} /follow
+     * @api {POST} /follow/delete
      * @apiGroup Follow
      * @apiDescription 取消关注
      * @apiParam {int} userId 用户ID
      * @apiParam {int} followerUserId 被关注用户ID
-     * @apiSuccess (200) {String}
+     * @apiSuccess (200) {String} message
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 OK
      *     {
@@ -78,7 +78,7 @@ public class FollowController {
      */
     @Authorization
     @ResponseBody
-    @RequestMapping(value = "/follow", method = RequestMethod.DELETE, produces="application/json;charset=UTF-8")
+    @RequestMapping(value = "/follow/delete", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
     public String unfollow(@RequestParam int userId,
                            @RequestParam int followerUserId) throws Exception {
 

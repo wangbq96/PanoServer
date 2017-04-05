@@ -47,21 +47,34 @@ public class RecordServiceImpl implements RecordService {
         record.setCreateTime(new Timestamp(System.currentTimeMillis()));
         record.setPicturePath(picturePath);
         recordRepository.saveAndFlush(record);
-        // publishUpdateTimeline(user, record);
+        publishUpdateTimeline(user, record);
     }
 
     public List<Record> getSomeoneRecords(int userId) throws IOException {
         return recordRepository.findByUserId(userId);
     }
 
+//    public List<Record> getTimeline(int userId, int earlyRecordId) throws IOException {
+//        return recordRepository.getTimeline(userId, earlyRecordId);
+//    }
+
     public List<Record> getTimeline(int userId, int earlyRecordId) throws IOException {
-        return recordRepository.getTimeline(userId, earlyRecordId);
+        List<Integer> recordIdList;
+        List<Record> recordList = new ArrayList<>();
+        if (earlyRecordId <= 0)
+            recordIdList = timelineRepository.getTimelineFirst(userId);
+        else
+            recordIdList = timelineRepository.getTimeline(userId, earlyRecordId);
+        for (int recordId : recordIdList) {
+            recordList.add(recordRepository.findOne(recordId));
+        }
+        return recordList;
     }
 
     @Async
     private void publishUpdateTimeline(User user, Record record) {
         List<Integer> fans = followRepository.getFollowerList(user.getId());
-        for (int id :fans ){
+        for (int id :fans ) {
             Timeline timeline = new Timeline();
             timeline.setUserId(id);
             timeline.setRecordId(record.getId());

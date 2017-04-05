@@ -18,6 +18,7 @@ public class ExceptionHandlerController {
     @ExceptionHandler
     @ResponseBody
     public String handler(HttpServletRequest request, HttpServletResponse response, Exception e) {
+        System.out.print(e.getClass().getName());
         return new ErrorMessage(e.getClass().getName()).toString();
     }
 }

@@ -29,7 +29,7 @@ public class RecordController extends ExceptionHandlerController {
      * @apiParam {String} lon 经度 nullable
      * @apiParam {String} lan 纬度 nullable
      * @apiParam {MultipartFile} file 图片文件
-     * @apiSuccess (200) {String}
+     * @apiSuccess (200) {String} message
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 OK
      *     {
@@ -66,7 +66,7 @@ public class RecordController extends ExceptionHandlerController {
      * @apiGroup Record
      * @apiDescription 获取某个用户所有的记录
      * @apiParam {int} userId 用户ID
-     * @apiSuccess (200) {String}
+     * @apiSuccess (200) {String} message
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 OK
      *     {
@@ -94,7 +94,7 @@ public class RecordController extends ExceptionHandlerController {
      * @apiGroup Record
      * @apiDescription 获取timeline
      * @apiParam {int} userId 用户ID
-     * @apiSuccess (200) {String}
+     * @apiSuccess (200) {String} message
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 OK
      *     {

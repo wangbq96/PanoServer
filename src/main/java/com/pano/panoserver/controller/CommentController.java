@@ -32,7 +32,7 @@ public class CommentController {
      * @apiParam {int} userId 用户ID
      * @apiParam {int} recordId 记录ID
      * @apiParam {String} content 评论内容
-     * @apiSuccess (200) {String}
+     * @apiSuccess (200) {String} message
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 OK
      *     {
@@ -66,12 +66,12 @@ public class CommentController {
     }
 
     /**
-     * @api {DELETE} /comments/:commentId
+     * @api {POST} /comments/delete
      * @apiGroup Comment
      * @apiDescription 删除评论
      * @apiParam {int} userId 用户ID
      * @apiParam {int} commentId 记录ID
-     * @apiSuccess (200) {String}
+     * @apiSuccess (200) {String} message
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 OK
      *     {
@@ -89,9 +89,9 @@ public class CommentController {
      */
     @Authorization
     @ResponseBody
-    @RequestMapping(value = "/comments/{commentId}", method = RequestMethod.DELETE, produces="application/json;charset=UTF-8")
+    @RequestMapping(value = "/comments/delete", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
     public String deleteComment(@RequestParam int userId,
-                                @PathVariable int commentId) throws Exception {
+                                @RequestParam int commentId) throws Exception {
         commentService.deleteComment(userId, commentId);
         return new RightMessage(null).toString();
     }
@@ -101,7 +101,7 @@ public class CommentController {
      * @apiGroup Comment
      * @apiDescription 获取某个记录的评论
      * @apiParam {int} recordId 记录ID
-     * @apiSuccess (200) {String}
+     * @apiSuccess (200) {String} message
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 OK
      *     {

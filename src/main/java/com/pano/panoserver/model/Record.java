@@ -19,6 +19,7 @@ public class Record {
     private Integer zan;
 
     @Id
+    @GeneratedValue
     @Column(name = "id", nullable = false)
     public int getId() {
         return id;

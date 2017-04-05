@@ -179,8 +179,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public void updateUserInfo(int userId, String nickname, String introduction, MultipartFile headPic) throws Exception {
-        User user = userRepository.findOne(userId);
-
         InputStream fileStream = headPic.getInputStream();
         byte [] headPicByte = iuput2byte(fileStream);
         fileStream.close();

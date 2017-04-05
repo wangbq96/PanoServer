@@ -18,6 +18,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String nickname;
 
+    @Column(columnDefinition="BLOB")
     private byte[] headPic;
 
     private String introduction;

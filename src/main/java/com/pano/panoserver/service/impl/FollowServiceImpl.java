@@ -42,6 +42,7 @@ public class FollowServiceImpl implements FollowService {
         follow.setFollowerUserId(followerUserId);
         follow.setCreateTime(new Timestamp(System.currentTimeMillis()));
         followRepository.saveAndFlush(follow);
+        followUpdateTimeline(userId, followerUserId);
     }
 
     public void unfollow(int userId, int unfollowUserId) throws Exception {
@@ -69,6 +70,7 @@ public class FollowServiceImpl implements FollowService {
     @Async
     private void unfollowUpdateTimeline(int userId, int unfollowUserId) {
         List<Record> list = recordRepository.findByUserId(unfollowUserId);
+
         for (Record record : list) {
             Timeline timeline = timelineRepository.findByUserIdAndRecordId(userId, record.getId());
             timelineRepository.delete(timeline);
