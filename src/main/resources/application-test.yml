@@ -1,0 +1,31 @@
+spring:
+  # MySQL Configuration:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/pano
+    username: root
+    password: mysql233
+
+  # JPA Configuration:
+  jpa:
+    database: MySQL
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+      naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      dialect: org.hibernate.dialect.MySQL5Dialect
+
+  # Redis Configuration
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
+  mail:
+    host:
+    username:
+    password:
+    default-encoding: UTF-8
+
+picture:
+  path: /home/pi/pano_pic
